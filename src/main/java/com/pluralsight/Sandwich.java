@@ -2,13 +2,14 @@ package com.pluralsight;
 
 import java.util.List;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class Sandwich {
     private String size;
     private String breadType;
     private boolean toasted;
-    private double extraPremiumToppings;
-    private List<String> regularToppings;
+    private List<String> extraPremiumToppings;
+    private List<String> extraRegularToppings;
     private List<String> premiumToppings;
 
     private double sizePrice;
@@ -18,6 +19,7 @@ public class Sandwich {
     private double extraMeatPrice;
     private boolean extraCheese;
     private double extraCheesePrice;
+
 
     public Sandwich(String size, String breadType) {
         this.size = size;
@@ -83,5 +85,14 @@ public class Sandwich {
         }
         return cheesePrice;
     }
-    
+
+    public static final List<String> regularToppings = List.of(
+            "lettuce", "peppers", "onions", "tomatoes", "jalapenos", "cucumbers",
+            "pickles", "guacamole", "mushrooms"
+    );
+
+    List<String> getRegularToppings = regularToppings.stream()
+            .filter(i -> i.contains("c") || i.contains("f")) //i want to pass a list of filters here
+            .collect(Collectors.toList());
+
 }
