@@ -85,6 +85,10 @@ public class Sandwich {
         }
         return cheesePrice;
     }
+    public double sandwichCost () {
+        return getSizePrice(size) + getCheesePrice(size, extraCheese, extraCheesePrice) + getMeatPrice(size, extraMeat, extraMeatPrice);
+
+    }
 
     public static final List<String> regularToppings = List.of(
             "lettuce", "peppers", "onions", "tomatoes", "jalapenos", "cucumbers",
@@ -95,4 +99,24 @@ public class Sandwich {
             .filter(i -> i.contains("c") || i.contains("f")) //i want to pass a list of filters here
             .collect(Collectors.toList());
 
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public void setBreadType(String breadType) {
+        this.breadType = breadType;
+    }
+
+    public void setToasted(boolean toasted) {
+        this.toasted = toasted;
+    }
+
+    public void setExtraMeat(boolean extraMeat) {
+        this.extraMeat = extraMeat;
+    }
+
+    public void setExtraCheese(boolean extraCheese) {
+        this.extraCheese = extraCheese;
+    }
 }
+
