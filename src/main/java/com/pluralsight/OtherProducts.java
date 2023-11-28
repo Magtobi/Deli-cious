@@ -6,12 +6,15 @@ public class OtherProducts {
     private String drinkFlavor;
     private String chipType;
     private double chipPrice;
+    private boolean hasChips;
+    private boolean hasDrink;
+
 
     public OtherProducts(String drinkSize) {
         this.drinkSize = drinkSize;
     }
 
-    public double getSizePrice(String drinkSize) {
+    public double getSizePrice(String drinkSize, boolean hasDrink) {
             if (drinkSize.equals("small")) {
                 sizePrice = 2.00;
 
@@ -23,6 +26,9 @@ public class OtherProducts {
 
             } else {
                 System.out.println("Invalid");
+            }
+            if (!hasDrink) {
+                sizePrice = 0.00;
             }
             return sizePrice;
         }
@@ -36,6 +42,10 @@ public class OtherProducts {
     }
 
     public double getChipPrice() {
-        return 1.50;
+        if (hasChips) {
+            return 1.50;
+        } else {
+            return 0.00;
+        }
     }
 }

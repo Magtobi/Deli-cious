@@ -118,5 +118,13 @@ public class Sandwich {
     public void setExtraCheese(boolean extraCheese) {
         this.extraCheese = extraCheese;
     }
+
+    public String getBreadType() {
+        return breadType;
+    }
+
+    public String getSize() {
+        return size;
+    }
 }
 
