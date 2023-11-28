@@ -14,7 +14,7 @@ public class OtherProducts {
         this.drinkSize = drinkSize;
     }
 
-    public double getSizePrice(String drinkSize, boolean hasDrink) {
+    public double getSizePrice() {
             if (drinkSize.equals("small")) {
                 sizePrice = 2.00;
 

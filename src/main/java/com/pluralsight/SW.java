@@ -1,17 +1,9 @@
 package com.pluralsight;
 
-import java.util.List;
 import java.util.Arrays;
-import java.util.stream.Collectors;
+import java.util.List;
 
-public class Sandwich {
-    private String size;
-    private String breadType;
-    private double price;
-
-    private List<String> extraPremiumToppings;
-    private List<String> extraRegularToppings;
-    private List<String> premiumToppings;
+public class SW extends Order{
     private boolean toasted;
     private double sizePrice;
     private double meatPrice;
@@ -21,10 +13,9 @@ public class Sandwich {
     private boolean extraCheese;
     private double extraCheesePrice;
 
-
-    public Sandwich(String size, String breadType) {
-        this.size = size;
-        this.breadType = breadType;
+    public SW(String size, String type, double price, boolean toasted) {
+        super(size, type, price);
+        this.toasted = toasted;
     }
 
     public double getSizePrice(String size) {
@@ -86,51 +77,39 @@ public class Sandwich {
         }
         return cheesePrice;
     }
-    public double sandwichCost () {
+    @Override
+    public double getPrice () {
         price = getSizePrice(size) + getCheesePrice(size, extraCheese, extraCheesePrice) + getMeatPrice(size, extraMeat, extraMeatPrice);
         return price;
     }
-
-    public static final List<String> regularToppings = List.of(
+    public static final List<String> regularToppings = Arrays.asList(
             "lettuce", "peppers", "onions", "tomatoes", "jalapenos", "cucumbers",
             "pickles", "guacamole", "mushrooms"
     );
-    public List<String> userRegToppings(String input) {
+    public void userRegToppings(String input) {
 
         List<String> userToppings = Arrays.asList(input.split(","));
 
-        return regularToppings.stream()
+
+        List<String> filteredList = regularToppings.stream()
                 .filter(topping -> userToppings.stream().anyMatch(topping::contains))
                 .toList();
+        System.out.println(filteredList);
 
     }
+    public static final List<String> premiumToppings = Arrays.asList(
+            "steak", "ham", "salami", "roast beef", "chicken", "bacon",
+            "american", "provolone", "cheddar", "swiss"
+    );
+    public void userPremiumToppings(String input) {
 
-    public void setSize(String size) {
-        this.size = size;
-    }
+        List<String> userToppings = Arrays.asList(input.split(","));
 
-    public void setBreadType(String breadType) {
-        this.breadType = breadType;
-    }
 
-    public void setToasted(boolean toasted) {
-        this.toasted = toasted;
-    }
+        List<String> filteredList = premiumToppings.stream()
+                .filter(topping -> userToppings.stream().anyMatch(topping::contains))
+                .toList();
+        System.out.println(filteredList);
 
-    public void setExtraMeat(boolean extraMeat) {
-        this.extraMeat = extraMeat;
-    }
-
-    public void setExtraCheese(boolean extraCheese) {
-        this.extraCheese = extraCheese;
-    }
-
-    public String getBreadType() {
-        return breadType;
-    }
-
-    public String getSize() {
-        return size;
     }
 }
-

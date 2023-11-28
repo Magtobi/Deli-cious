@@ -54,7 +54,6 @@ public class Main {
        switch (choice) {
            case "1":
                createSandwich();
-               orderScreen();
            case "2":
                addDrink();
            case "3":
@@ -89,7 +88,20 @@ public class Main {
 
         Sandwich sandwich = new Sandwich(size, breadType);
         customizeSandwich(sandwich);
+
+        //Receipt receipt= new Receipt()
+        System.out.println("Would you like to complete your order? (Y/N)");
+        String answer = scanner.next().toUpperCase();
+        if(answer.equals("Y")){
+            // complete order
+           // Receipt.generateReceipt();
+        } else if (answer.equals("N")) {
+            orderScreen();
+        }
         return sandwich;
+
+
+
     }
 
     private String breadType(int choice) {
@@ -133,7 +145,17 @@ public class Main {
 
             switch (toppingChoice) {
                 case 1:
-                    System.out.println("Select regular topping:");
+
+                    SW sw= new SW("","", 0, true);
+
+
+                    System.out.println("Available regular toppings: Lettuce, Peppers ,Onions, Tomatoes \n Jalapenos, Cucumbers, Pickles, Guacamole, Mushrooms");
+                    System.out.println("List the regular toppings you want: (comma-separated)");
+                    String input = scanner.next().toLowerCase();
+                    sw.userRegToppings(input);
+
+//                    System.out.println("\"lettuce\", \"peppers\", \"onions\", \"tomatoes\", \"jalapenos\", \"cucumbers\",\n" +
+//                            "            \"pickles\", \"guacamole\", \"mushrooms\"");
                     // Implement regular toppings selection using Sandwich class methods
                     break;
                 case 2:
@@ -270,6 +292,13 @@ public class Main {
         System.out.println("Receipt created.");
         homeScreen();
     }
+//    public static void displayOrder() {
+//        System.out.println("Sandwich size: " + size);
+//        System.out.println("Bread type: " + breadType);
+//        System.out.println("Regular toppings: " + regularToppings);
+//        System.out.println("Premium toppings: " + premiumToppings);
+//    }
+
 }
 
 

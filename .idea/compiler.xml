@@ -9,5 +9,8 @@
         <module name="Deli-cious" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="DELI-cious" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>
