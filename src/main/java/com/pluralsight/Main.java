@@ -13,7 +13,7 @@ public class Main {
         main.homeScreen();
     }
 
-    public void homeScreen() {
+    public static void homeScreen() {
         String choice;
         do {
             System.out.println("HOME SCREEN");
@@ -29,10 +29,10 @@ public class Main {
                     System.out.println("Exiting the application...");
                     System.exit(0);
                     break;
-//                default:
-//                    System.out.println("Invalid choice. Please try again.");
+                default:
+                    System.out.println("Invalid choice. Please try again.");
             }
-        } while (true);
+        } while (choice != "0");
     }
 
    public static void orderScreen() {
@@ -46,10 +46,13 @@ public class Main {
        switch (choice) {
            case "1":
                createSandwich();
+               break;
            case "2":
-               addDrink();
+               wantsDrink();
+               break;
            case "3":
                addChips();
+               break;
            case "4":
                break;
 
@@ -95,9 +98,10 @@ public class Main {
         //Receipt receipt= new Receipt()
         System.out.println("Would you like to complete your order? (Y/N)");
         String answer = scanner.next().toUpperCase();
+        Drink dwink = wantsDrink();
         if(answer.equals("Y")){
             // complete order
-           // Receipt.generateReceipt();
+         createReceipt(sandwich, dwink, 234);
         } else if (answer.equals("N")) {
             orderScreen();
         }
@@ -191,7 +195,7 @@ public class Main {
 
     public static List<String> regTopping(){
         Scanner scan = new Scanner(System.in);
-        SW sw = createSandwich();
+        SW sw = new SW("", "", true);
 
 
         System.out.println("Available regular toppings:\n Lettuce, Peppers ,Onions, Tomatoes \n Jalapenos, Cucumbers, Pickles, Guacamole, Mushrooms");
@@ -206,31 +210,35 @@ public class Main {
 
     }
 
-    private static String addDrink() {
-        System.out.println("ADD DRINK");
-        System.out.println("Select the flavor of the drink:");
-        System.out.println("  Coke");
-        System.out.println("  Pepsi");
-        System.out.println("  Sprite");
-        System.out.println("  No bev");
-        System.out.print("Enter your choice: ");
-        String drinkFlavor = scanner.next().trim().toLowerCase();
 
-        System.out.println("Select the size of the drink:");
-        System.out.println("  Small");
-        System.out.println("  Medium");
-        System.out.println("  Large");
-        System.out.print("Enter your choice: ");
-        String drinkSize = scanner.next().trim().toLowerCase();
 
+
+         private static Drink wantsDrink() {
+            System.out.println("Select the flavor of the drink:");
+            System.out.println("  Coke");
+            System.out.println("  Pepsi");
+            System.out.println("  Sprite");
+            System.out.print("Enter your choice: ");
+            String drinkFlavor = scanner.next().trim().toLowerCase();
+
+            System.out.println("Select the size of the drink:");
+            System.out.println("  Small");
+            System.out.println("  Medium");
+            System.out.println("  Large");
+            System.out.print("Enter your choice: ");
+            String drinkSize = scanner.next().trim().toLowerCase();
+
+            Drink drink = new Drink(drinkSize, drinkFlavor, true);
 
 
 //        String size = sandwichSize(drinkSize);
 //        String flavor = flavor(drinkFlavor);
 //
 //        return size + " " + flavor + " Drink";
-        return drinkSize + " " + drinkFlavor + "Drink";
-    }
+            orderScreen();
+            return drink;
+        }
+
 
 //    private String flavor(int choice) {
 //        switch (choice) {
@@ -257,6 +265,7 @@ public class Main {
         System.out.print("Enter your choice: ");
         String chipChoice = scanner.next().trim().toLowerCase();
 
+        orderScreen();
         return chipChoice;
     }
 
@@ -292,9 +301,10 @@ public class Main {
         System.out.print("Enter your choice: ");
         int choice = scanner.nextInt();
 
+        Drink drink2 = wantsDrink();
         switch (choice) {
             case 1:
-                createReceipt(sandwich, drink, chips, totalCost);
+                createReceipt(sandwich, drink2, totalCost);
                 System.out.println("Order confirmed. Creating receipt...");
                 break;
             case 2:
@@ -309,7 +319,7 @@ public class Main {
     }
 
     private double totalCost(SW sandwich, String drink, String chips) {
-        OtherProducts otherProducts = new OtherProducts(drink);
+        Drink drinks = new Drink("", "", true);
          double sandwichCost = sandwich.getPrice();
 //         double drinkCost = otherProducts.getSizePrice();
          double chipsCost;
@@ -319,12 +329,14 @@ public class Main {
 //
         return sandwichCost;
     }
-    private void createReceipt(SW sandwich, String drink, String chips, double totalCost) {
-        List<SW> orderList = new ArrayList<>();
+    private static void createReceipt(SW sandwich, Drink drink, double totalCost) {
+        List<Order> orderList = new ArrayList<>();
         orderList.add(sandwich);
+        orderList.add(drink);
+
 
         Receipt receipt = new Receipt(orderList, totalCost);
-        receipt.generateReceipt();
+        receipt.generateReceipt(regTopping());
 
         System.out.println("Receipt created.");
         homeScreen();

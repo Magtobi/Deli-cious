@@ -14,17 +14,17 @@ import java.time.format.DateTimeFormatter;
 import static com.pluralsight.Main.regTopping;
 
 public class Receipt {
-    private List<SW> order;
+    private List<Order> order;
     private double totalCost;
     public static DateTimeFormatter fmt = DateTimeFormatter.ofPattern("HH:mm:ss");
-    public Receipt(List<SW> order, double totalCost) {
+    public Receipt(List<Order> order, double totalCost) {
         this.order = order;
         this.totalCost = totalCost;
     }
 
-    public void generateReceipt() {
+    public void generateReceipt(List <String> whatever) {
         try {
-            File folder = new File("src/main/resources");
+            File folder = new File("src/main/resources/Receipts");
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
             String date = String.valueOf(LocalDate.now());
@@ -34,7 +34,7 @@ public class Receipt {
             File file = new File(folder, fileName);
             BufferedWriter bufWriter = new BufferedWriter(new FileWriter(file));
 
-            for (SW sandwich : order) {
+            for (Order sandwich : order) {
                 bufWriter.write(date + " " + time);
                 bufWriter.newLine();
                 bufWriter.write("Sandwich:");
@@ -44,9 +44,19 @@ public class Receipt {
                 bufWriter.write("Bread Type: " + sandwich.getType());
                 bufWriter.newLine();
                 bufWriter.write("Regular Toppings: ");
+                for (String s : whatever) {
+                    bufWriter.write(s + ",");
+                }
                 bufWriter.newLine();
-
             }
+            for (Order drink : order) {
+                if(drink instanceof Drink){
+                bufWriter.write("Drink: " + drink.getType() + drink.getSize());}
+                //    bufWriter.newLine();
+                //  bufWriter.write("Size: " + drink.getSize());
+            }
+
+
 
             bufWriter.write("Total Cost: $" + totalCost);
 

@@ -1,5 +1,6 @@
 package com.pluralsight;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,10 +13,40 @@ public class SW extends Order{
     private double extraMeatPrice;
     private boolean extraCheese;
     private double extraCheesePrice;
+    private List<String> selectedRegularToppings;
+    private List<String> selectedPremiumToppings;
+    public void addRegularTopping(String topping) {
+        if (regularToppings.contains(topping)) {
+            selectedRegularToppings.add(topping);
+        }
+    }
+
+    public void addPremiumTopping(String topping) {
+        if (premiumToppings.contains(topping)) {
+            selectedPremiumToppings.add(topping);
+        }
+    }
 
     public SW(String size, String type, boolean toasted) {
         super(size, type);
         this.toasted = toasted;
+        this.selectedRegularToppings = new ArrayList<>();
+    }
+
+    public List<String> getSelectedRegularToppings() {
+        return selectedRegularToppings;
+    }
+
+    public void setSelectedRegularToppings(List<String> selectedRegularToppings) {
+        this.selectedRegularToppings = selectedRegularToppings;
+    }
+
+    public List<String> getSelectedPremiumToppings() {
+        return selectedPremiumToppings;
+    }
+
+    public void setSelectedPremiumToppings(List<String> selectedPremiumToppings) {
+        this.selectedPremiumToppings = selectedPremiumToppings;
     }
 
     public double getSizePrice(String size) {
@@ -94,6 +125,7 @@ public class SW extends Order{
         List<String> filteredList = regularToppings.stream()
                 .filter(topping -> userToppings.stream().anyMatch(topping::contains))
                 .toList();
+        setSelectedRegularToppings(filteredList);
         return filteredList;
 
     }
