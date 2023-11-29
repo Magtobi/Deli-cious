@@ -1,16 +1,8 @@
 package com.pluralsight;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.*;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
-import java.time.format.DateTimeFormatter;
 
 public class Main {
 
@@ -40,10 +32,10 @@ public class Main {
 //                default:
 //                    System.out.println("Invalid choice. Please try again.");
             }
-        } while (choice != "0");
+        } while (true);
     }
 
-   public void orderScreen() {
+   public static void orderScreen() {
         System.out.println("ORDER SCREEN");
         System.out.println("1) Would you like a Sandwich?");
         System.out.println("2) Would you like a drink? ");
@@ -67,7 +59,7 @@ public class Main {
    }
 
 
-    private Sandwich createSandwich() {
+    private static SW createSandwich() {
         System.out.println("Select your bread:");
         System.out.println("1) White");
         System.out.println("2) Wheat");
@@ -83,10 +75,21 @@ public class Main {
         System.out.print("Enter your choice: ");
         int sizeChoice = scanner.nextInt();
 
+        System.out.println("Would you like the bread toasted? (Y/N)");
+        String option = scanner.next();
+        boolean isToasted= true;
+        if (option.equalsIgnoreCase("y")){
+            isToasted = true;
+        }else if(option.equalsIgnoreCase("n")){
+            isToasted = false;
+        }else {
+            System.out.println("Invalid response.");
+        }
+
         String breadType = breadType(breadChoice);
         String size = sandwichSize(sizeChoice);
 
-        Sandwich sandwich = new Sandwich(size, breadType);
+        SW sandwich = new SW(size, breadType,isToasted);
         customizeSandwich(sandwich);
 
         //Receipt receipt= new Receipt()
@@ -104,7 +107,7 @@ public class Main {
 
     }
 
-    private String breadType(int choice) {
+    private static String breadType(int choice) {
         switch (choice) {
             case 1:
                 return "white";
@@ -119,7 +122,7 @@ public class Main {
         }
     }
 
-    private String sandwichSize(int choice) {
+    private static String sandwichSize(int choice) {
         switch (choice) {
             case 1:
                 return "4\"";
@@ -132,7 +135,10 @@ public class Main {
         }
     }
 
-    private void customizeSandwich(Sandwich sandwich) {
+    private static void customizeSandwich(SW sandwich) {
+
+
+
         boolean addMoreToppings = true;
         do {
             System.out.println("Select toppings:");
@@ -145,21 +151,33 @@ public class Main {
 
             switch (toppingChoice) {
                 case 1:
+                    regTopping();
+//                    SW sw= new SW("","", true);
+//
+//
+//                    System.out.println("Available regular toppings:\n Lettuce, Peppers ,Onions, Tomatoes \n Jalapenos, Cucumbers, Pickles, Guacamole, Mushrooms");
+//                    System.out.println("List the regular toppings you want: (comma-separated)");
+//
+//
+//                    String input = scan.nextLine(); // to remove all whitespaces
+//                    List<String> inputRegToppings= sw.userRegToppings(input.toLowerCase().replaceAll("\\s+", ""));
+//                    // new scanner fixed it idk why
+//                    inputRegToppings.forEach(System.out::println);// way of listing
 
-                    SW sw= new SW("","", 0, true);
 
-
-                    System.out.println("Available regular toppings: Lettuce, Peppers ,Onions, Tomatoes \n Jalapenos, Cucumbers, Pickles, Guacamole, Mushrooms");
-                    System.out.println("List the regular toppings you want: (comma-separated)");
-                    String input = scanner.next().toLowerCase();
-                    sw.userRegToppings(input);
-
-//                    System.out.println("\"lettuce\", \"peppers\", \"onions\", \"tomatoes\", \"jalapenos\", \"cucumbers\",\n" +
-//                            "            \"pickles\", \"guacamole\", \"mushrooms\"");
                     // Implement regular toppings selection using Sandwich class methods
                     break;
                 case 2:
-                    System.out.println("Select premium topping:");
+//                    SW sw1= new SW("","", true);
+//                    System.out.println("Available regular toppings:\n Meats: Steak, Ham, Salami, Roast Beef, Chicken, Bacon \n Cheeses: American, Provolone, Cheddar, Swiss");
+//
+//                    System.out.println("List the premium toppings you want: (comma-separated)");
+//                    String userInput = scan.nextLine(); // to remove all whitespaces
+//                    List<String> inputPreToppings= sw1.userPremiumToppings(userInput.toLowerCase().replaceAll("\\s+", ""));
+//
+//                    inputPreToppings.forEach(System.out::println);// way of listing
+
+
                     // Implement premium toppings selection using Sandwich class methods
                     break;
                 case 0:
@@ -171,15 +189,25 @@ public class Main {
         } while (addMoreToppings);
     }
 
-    private String addDrink() {
-        System.out.println("ADD DRINK");
-        System.out.println("Select the size of the drink:");
-        System.out.println("  Small");
-        System.out.println("  Medium");
-        System.out.println("  Large");
-        System.out.print("Enter your choice: ");
-        String drinkSize = scanner.next().trim().toLowerCase();
+    public static List<String> regTopping(){
+        Scanner scan = new Scanner(System.in);
+        SW sw = createSandwich();
 
+
+        System.out.println("Available regular toppings:\n Lettuce, Peppers ,Onions, Tomatoes \n Jalapenos, Cucumbers, Pickles, Guacamole, Mushrooms");
+        System.out.println("List the regular toppings you want: (comma-separated)");
+
+
+        String input = scan.nextLine(); // to remove all whitespaces
+        List<String> inputRegToppings= sw.userRegToppings(input.toLowerCase().replaceAll("\\s+", ""));
+
+        return inputRegToppings;
+                //inputRegToppings.forEach(System.out::println);// way of listing
+
+    }
+
+    private static String addDrink() {
+        System.out.println("ADD DRINK");
         System.out.println("Select the flavor of the drink:");
         System.out.println("  Coke");
         System.out.println("  Pepsi");
@@ -187,6 +215,15 @@ public class Main {
         System.out.println("  No bev");
         System.out.print("Enter your choice: ");
         String drinkFlavor = scanner.next().trim().toLowerCase();
+
+        System.out.println("Select the size of the drink:");
+        System.out.println("  Small");
+        System.out.println("  Medium");
+        System.out.println("  Large");
+        System.out.print("Enter your choice: ");
+        String drinkSize = scanner.next().trim().toLowerCase();
+
+
 
 //        String size = sandwichSize(drinkSize);
 //        String flavor = flavor(drinkFlavor);
@@ -210,7 +247,7 @@ public class Main {
 //        }
 //    }
 
-    private String addChips() {
+    private static String addChips() {
         System.out.println("ADD CHIPS");
         System.out.println("Select the type of chips:");
         System.out.println("  Plain");
@@ -239,10 +276,10 @@ public class Main {
 //    }
 
 
-   private void checkout(Sandwich sandwich, String drink, String chips) {
+   private void checkout(SW sandwich, String drink, String chips) {
         System.out.println("CHECKOUT");
         System.out.println("Order Details:");
-        sandwich.sandwichCost();
+        sandwich.getPrice();
         System.out.println("Drink: " + drink);
         System.out.println("Chips: " + chips);
 
@@ -271,9 +308,9 @@ public class Main {
         }
     }
 
-    private double totalCost(Sandwich sandwich, String drink, String chips) {
+    private double totalCost(SW sandwich, String drink, String chips) {
         OtherProducts otherProducts = new OtherProducts(drink);
-         double sandwichCost = sandwich.sandwichCost();
+         double sandwichCost = sandwich.getPrice();
 //         double drinkCost = otherProducts.getSizePrice();
          double chipsCost;
 
@@ -282,8 +319,8 @@ public class Main {
 //
         return sandwichCost;
     }
-    private void createReceipt(Sandwich sandwich, String drink, String chips, double totalCost) {
-        List<Sandwich> orderList = new ArrayList<>();
+    private void createReceipt(SW sandwich, String drink, String chips, double totalCost) {
+        List<SW> orderList = new ArrayList<>();
         orderList.add(sandwich);
 
         Receipt receipt = new Receipt(orderList, totalCost);

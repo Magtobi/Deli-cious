@@ -13,8 +13,8 @@ public class SW extends Order{
     private boolean extraCheese;
     private double extraCheesePrice;
 
-    public SW(String size, String type, double price, boolean toasted) {
-        super(size, type, price);
+    public SW(String size, String type, boolean toasted) {
+        super(size, type);
         this.toasted = toasted;
     }
 
@@ -86,7 +86,7 @@ public class SW extends Order{
             "lettuce", "peppers", "onions", "tomatoes", "jalapenos", "cucumbers",
             "pickles", "guacamole", "mushrooms"
     );
-    public void userRegToppings(String input) {
+    public List<String> userRegToppings(String input) {
 
         List<String> userToppings = Arrays.asList(input.split(","));
 
@@ -94,14 +94,14 @@ public class SW extends Order{
         List<String> filteredList = regularToppings.stream()
                 .filter(topping -> userToppings.stream().anyMatch(topping::contains))
                 .toList();
-        System.out.println(filteredList);
+        return filteredList;
 
     }
     public static final List<String> premiumToppings = Arrays.asList(
             "steak", "ham", "salami", "roast beef", "chicken", "bacon",
             "american", "provolone", "cheddar", "swiss"
     );
-    public void userPremiumToppings(String input) {
+    public List<String> userPremiumToppings(String input) {
 
         List<String> userToppings = Arrays.asList(input.split(","));
 
@@ -109,7 +109,9 @@ public class SW extends Order{
         List<String> filteredList = premiumToppings.stream()
                 .filter(topping -> userToppings.stream().anyMatch(topping::contains))
                 .toList();
-        System.out.println(filteredList);
+        return filteredList;
+
+        //System.out.println(filteredList);
 
     }
 }

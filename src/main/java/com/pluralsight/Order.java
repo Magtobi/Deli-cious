@@ -5,10 +5,9 @@ public abstract class Order {
     protected String type;
     protected double price;
 
-    public Order(String size, String type, double price) {
+    public Order(String size, String type) {
         this.size = size;
         this.type = type;
-        this.price = price;
     }
 
     public String getSize() {

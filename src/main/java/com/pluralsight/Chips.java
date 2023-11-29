@@ -3,8 +3,8 @@ package com.pluralsight;
 public class Chips extends Order{
     private boolean hasChips;
 
-    public Chips(String size, String type, double price, boolean hasChips) {
-        super(size, type, price);
+    public Chips(String size, String type, boolean hasChips) {
+        super(size, type);
         this.hasChips = hasChips;
     }
 

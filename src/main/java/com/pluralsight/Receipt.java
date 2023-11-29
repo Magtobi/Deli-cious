@@ -11,11 +11,13 @@ import java.util.Date;
 import java.util.List;
 import java.time.format.DateTimeFormatter;
 
+import static com.pluralsight.Main.regTopping;
+
 public class Receipt {
-    private List<Sandwich> order;
+    private List<SW> order;
     private double totalCost;
     public static DateTimeFormatter fmt = DateTimeFormatter.ofPattern("HH:mm:ss");
-    public Receipt(List<Sandwich> order, double totalCost) {
+    public Receipt(List<SW> order, double totalCost) {
         this.order = order;
         this.totalCost = totalCost;
     }
@@ -32,15 +34,18 @@ public class Receipt {
             File file = new File(folder, fileName);
             BufferedWriter bufWriter = new BufferedWriter(new FileWriter(file));
 
-            for (Sandwich sandwich : order) {
+            for (SW sandwich : order) {
                 bufWriter.write(date + " " + time);
                 bufWriter.newLine();
                 bufWriter.write("Sandwich:");
                 bufWriter.newLine();
                 bufWriter.write("Size: " + sandwich.getSize());
                 bufWriter.newLine();
-                bufWriter.write("Bread Type: " + sandwich.getBreadType());
+                bufWriter.write("Bread Type: " + sandwich.getType());
                 bufWriter.newLine();
+                bufWriter.write("Regular Toppings: ");
+                bufWriter.newLine();
+
             }
 
             bufWriter.write("Total Cost: $" + totalCost);
