@@ -11,18 +11,17 @@ import java.util.Date;
 import java.util.List;
 import java.time.format.DateTimeFormatter;
 
-import static com.pluralsight.Main.regTopping;
+import static com.pluralsight.Main.*;
 
 public class Receipt {
-    private List<Order> order;
-    private double totalCost;
+
+
     public static DateTimeFormatter fmt = DateTimeFormatter.ofPattern("HH:mm:ss");
-    public Receipt(List<Order> order, double totalCost) {
-        this.order = order;
-        this.totalCost = totalCost;
+    public Receipt() {
+
     }
 
-    public void generateReceipt(List <String> whatever) {
+    public void generateReceipt() {
         try {
             File folder = new File("src/main/resources/Receipts");
 
@@ -34,7 +33,7 @@ public class Receipt {
             File file = new File(folder, fileName);
             BufferedWriter bufWriter = new BufferedWriter(new FileWriter(file));
 
-            for (Order o : order) {
+            for (Order o : orders) {
                 if (o instanceof SW) {
 
                 bufWriter.write(date + " " + time);
@@ -46,12 +45,24 @@ public class Receipt {
                 bufWriter.write("Bread Type: " + o.getType());
                 bufWriter.newLine();
                 bufWriter.write("Regular Toppings: ");
-                for (String s : whatever) {
+                for (String s : inputRegToppings) {
                     bufWriter.write(s + ",");
                 }
                 bufWriter.newLine(); }
              else if (o instanceof Drink){
-                bufWriter.write("Drink: " + o.getType() + o.getSize());}
+                bufWriter.write("Drink: " + o.getType());
+                bufWriter.newLine();
+                bufWriter.write("Size: " + o.getSize());
+                bufWriter.newLine();
+                bufWriter.write("Price: " + o.getPrice());
+                bufWriter.newLine();
+             }
+             else if(o instanceof Chips){
+                 bufWriter.write("Chips Flavor: " + o.getType());
+                 bufWriter.newLine();
+                 bufWriter.write("Price: " + o.getPrice());
+                 bufWriter.newLine();
+                }
                 //    bufWriter.newLine();
                 //  bufWriter.write("Size: " + drink.getSize());
             }

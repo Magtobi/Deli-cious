@@ -4,15 +4,21 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.List;
 
+import static com.pluralsight.SW.hasSandwich;
+
 public class Main {
 
     private static final Scanner scanner = new Scanner(System.in);
-    private static double totalCost;
+    public static double totalCost;
     private static SW sandwich;
     private static Drink drink;
     private static Chips chips;
+    public static List<String> inputRegToppings;
+    public static List<Order> orders;
 
     public static void main(String[] args) {
+        orders = new ArrayList<>();
+
         homeScreen();
     }
 
@@ -38,7 +44,7 @@ public class Main {
         } while (choice != "0");
     }
 
-   public static void orderScreen() {
+    public static void orderScreen() {
 //       SW sandwich = createSandwich();
 //       Drink drink = wantsDrink();
 //       Chips chips = addChips();
@@ -46,28 +52,32 @@ public class Main {
         System.out.println("1) Would you like a Sandwich?");
         System.out.println("2) Would you like a drink? ");
         System.out.println("3) Would you like a bag of chips? ");
-        System.out.println("4) Exit");
+        System.out.println("4) Checkout");
+        System.out.println("5) Exit");
         String choice = scanner.next().trim().toLowerCase();
 
-       switch (choice) {
-           case "1":
-               createSandwich();
+        switch (choice) {
+            case "1":
+                createSandwich();
 //               sandwich = createSandwich();
-               System.out.println(sandwich.getSize());
-               break;
-           case "2":
-               wantsDrink();
-               break;
-           case "3":
-               addChips();
-               break;
-           case "4":
-               break;
+                System.out.println(sandwich.getSize());
+                break;
+            case "2":
+                wantsDrink();
+                break;
+            case "3":
+                addChips();
+                break;
+            case "4":
+                checkout();
+                break;
+            case "5":
+                System.exit(0);
+                break;
 
-       }
+        }
 
-        checkout();
-   }
+    }
 
 
     public static SW createSandwich() {
@@ -88,83 +98,84 @@ public class Main {
 
         System.out.println("Would you like the bread toasted? (Y/N)");
         String option = scanner.next();
-        boolean isToasted= true;
-        if (option.equalsIgnoreCase("y")){
+        boolean isToasted = true;
+        if (option.equalsIgnoreCase("y")) {
             isToasted = true;
-        }else if(option.equalsIgnoreCase("n")){
+        } else if (option.equalsIgnoreCase("n")) {
             isToasted = false;
-        }else {
+        } else {
             System.out.println("Invalid response.");
         }
 
         String breadType = breadType(breadChoice);
         String size = sandwichSize(sizeChoice);
 
-        sandwich = new SW(size, breadType,isToasted);
+        sandwich = new SW(size, breadType, isToasted);
         customizeSandwich(sandwich);
 
         sandwich.setHasSandwich(true);
-        //Receipt receipt= new Receipt()
-//        System.out.println("Would you like to complete your order? (Y/N)");
-//        String answer = scanner.next().toUpperCase();
-//        Drink dwink = wantsDrink();
-//        if(answer.equals("Y")){
-//            // complete order
-////         createReceipt(sandwich, dwink, );
-//        } else if (answer.equals("N")) {
-//            orderScreen();
-//        }
-        return sandwich;
 
+        orders.add(sandwich);
+        //System.out.println(orders.size());
 
-
-    }
-
-    private static String breadType(int choice) {
-        switch (choice) {
-            case 1:
-                return "white";
-            case 2:
-                return "wheat";
-            case 3:
-                return "rye";
-            case 4:
-                return "wrap";
-            default:
-                return "Invalid option";
+        System.out.println("Would you like to add anything else? (Y/N)");
+        String answer = scanner.next().toUpperCase();
+        if (answer.equals("Y")) {
+            orderScreen();
         }
-    }
 
-    private static String sandwichSize(int choice) {
-        switch (choice) {
-            case 1:
-                return "4\"";
-            case 2:
-                return "8\"";
-            case 3:
-                return "12\"";
-            default:
-                return "Invalid option";
+        else if (answer.equals("N")) {
+            checkout();
         }
-    }
-
-    private static void customizeSandwich(SW sandwich) {
+            return sandwich;
 
 
+        }
 
-        boolean addMoreToppings = true;
-        do {
-            System.out.println("Select toppings:");
-            System.out.println("1) Regular Toppings");
-            System.out.println("2) Premium Toppings");
-            System.out.println("0) Done");
-
-            System.out.print("Enter your choice: ");
-            int toppingChoice = scanner.nextInt();
-
-            switch (toppingChoice) {
+        private static String breadType ( int choice){
+            switch (choice) {
                 case 1:
-                    regTopping();
+                    return "white";
+                case 2:
+                    return "wheat";
+                case 3:
+                    return "rye";
+                case 4:
+                    return "wrap";
+                default:
+                    return "Invalid option";
+            }
+        }
+
+        private static String sandwichSize ( int choice){
+            switch (choice) {
+                case 1:
+                    return "4\"";
+                case 2:
+                    return "8\"";
+                case 3:
+                    return "12\"";
+                default:
+                    return "Invalid option";
+            }
+        }
+
+        private static void customizeSandwich (SW sandwich){
+
+
+            boolean addMoreToppings = true;
+            do {
+                System.out.println("Select toppings:");
+                System.out.println("1) Regular Toppings");
+                System.out.println("2) Premium Toppings");
+                System.out.println("0) Done");
+
+                System.out.print("Enter your choice: ");
+                int toppingChoice = scanner.nextInt();
+
+                switch (toppingChoice) {
+                    case 1:
+                        regTopping();
 //                    SW sw= new SW("","", true);
 //
 //
@@ -178,9 +189,9 @@ public class Main {
 //                    inputRegToppings.forEach(System.out::println);// way of listing
 
 
-                    // Implement regular toppings selection using Sandwich class methods
-                    break;
-                case 2:
+                        // Implement regular toppings selection using Sandwich class methods
+                        break;
+                    case 2:
 //                    SW sw1= new SW("","", true);
 //                    System.out.println("Available regular toppings:\n Meats: Steak, Ham, Salami, Roast Beef, Chicken, Bacon \n Cheeses: American, Provolone, Cheddar, Swiss");
 //
@@ -191,40 +202,39 @@ public class Main {
 //                    inputPreToppings.forEach(System.out::println);// way of listing
 
 
-                    // Implement premium toppings selection using Sandwich class methods
-                    break;
-                case 0:
-                    addMoreToppings = false;
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
-        } while (addMoreToppings);
-    }
+                        // Implement premium toppings selection using Sandwich class methods
+                        break;
+                    case 0:
+                        addMoreToppings = false;
+                        orderScreen();
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                }
+            } while (addMoreToppings);
+        }
 
-    public static List<String> regTopping(){
-        Scanner scan = new Scanner(System.in);
-        SW sw = new SW("", "", true);
-
-
-        System.out.println("Available regular toppings:\n Lettuce, Peppers ,Onions, Tomatoes \n Jalapenos, Cucumbers, Pickles, Guacamole, Mushrooms");
-        System.out.println("List the regular toppings you want: (comma-separated)");
+        public static List<String> regTopping () {
+            Scanner scan = new Scanner(System.in);
+            SW sw = new SW("", "", true);
 
 
-        String input = scan.nextLine(); // to remove all whitespaces
-        List<String> inputRegToppings= sw.userRegToppings(input.toLowerCase().replaceAll("\\s+", ""));
+            System.out.println("Available regular toppings:\n Lettuce, Peppers ,Onions, Tomatoes \n Jalapenos, Cucumbers, Pickles, Guacamole, Mushrooms");
+            System.out.println("List the regular toppings you want: (comma-separated)");
 
 
-        return inputRegToppings;
-
-                //inputRegToppings.forEach(System.out::println);// way of listing
-
-    }
+            String input = scan.nextLine(); // to remove all whitespaces
+             inputRegToppings = sw.userRegToppings(input.toLowerCase().replaceAll("\\s+", ""));
 
 
+            return inputRegToppings;
+
+            //inputRegToppings.forEach(System.out::println);// way of listing
+
+        }
 
 
-         public static Drink wantsDrink() {
+        public static Drink wantsDrink () {
             System.out.println("Select the flavor of the drink:");
             System.out.println("  Coke");
             System.out.println("  Pepsi");
@@ -242,11 +252,21 @@ public class Main {
             drink = new Drink(drinkSize, drinkFlavor, true);
             drink.setHasDrink(true);
 
+            orders.add(drink);
+
 //        String size = sandwichSize(drinkSize);
 //        String flavor = flavor(drinkFlavor);
 //
 //        return size + " " + flavor + " Drink";
-//            orderScreen();
+            System.out.println("Would you like to add anything else? (Y/N)");
+            String answer = scanner.next().toUpperCase();
+            if (answer.equals("Y")) {
+                orderScreen();
+            }
+
+            else if (answer.equals("N")) {
+                checkout();
+            }
             return drink;
         }
 
@@ -266,77 +286,82 @@ public class Main {
 //        }
 //    }
 
-    public static Chips addChips() {
-        System.out.println("ADD CHIPS");
-        System.out.println("Select the type of chips:");
-        System.out.println("  Plain");
-        System.out.println("  BBQ");
-        System.out.println("  Salt & Vinegar");
+        public static Chips addChips () {
+            System.out.println("ADD CHIPS");
+            System.out.println("Select the type of chips:");
+            System.out.println("  Plain");
+            System.out.println("  BBQ");
+            System.out.println("  Salt & Vinegar");
 //        System.out.println("  No chips");
-        System.out.print("Enter your choice: ");
-        String chipChoice = scanner.next().trim().toLowerCase();
+            System.out.print("Enter your choice: ");
+            String chipChoice = scanner.next().trim().toLowerCase();
 
-        chips = new Chips("", chipChoice, false);
-        chips.setHasChips(true);
-//        if (!chipChoice.equals("no chips")) {
-////            System.out.println("chips");
-////        orderScreen();
-//////            SW sandwich = createSandwich();
-////            Drink drink = wantsDrink();
-////            checkout(sandwich, drink, chips);
-//        } else {
-//            System.out.println("Skip chips.");
-////            homeScreen();
-//        }
-        return chips;
-    }
+            chips = new Chips("", chipChoice, false);
+            chips.setHasChips(true);
 
-//    private String chipType(int choice) {
-//        switch (choice) {
-//            case 1:
-//                return "Plain Chips";
-//            case 2:
-//                return "BBQ Chips";
-//            case 3:
-//                return "Salt & Vinegar Chips";
-//            case 4:
-//                return "No chips";
-//            default:
-//                return "";
-//        }
-//    }
+            orders.add(chips);
+
+            System.out.println("Would you like to add anything else? (Y/N)");
+            String answer = scanner.next().toUpperCase();
+            if (answer.equals("Y")) {
+                orderScreen();
+            }
+
+            else if (answer.equals("N")) {
+                checkout();
+            }
+            return chips;
+        }
 
 
-   public static void checkout() {
+
+    public static void checkout() {
         System.out.println("CHECKOUT");
+
+        if (orders.isEmpty()) {
+            System.out.println("No orders to display.");
+            return;
+        }
+
         System.out.println("Order Details:");
 
-        if (sandwich != null) {
-            System.out.println("Sandwich Details \nBread Type: " + sandwich.getType() + "\nToasted: " + sandwich.isToasted() + "\nSize: " + sandwich.getSize() + "\nPrice: " + sandwich.getPrice());
-        }
-        if (drink != null) {
-            System.out.println("Drink: " + drink.getType() + "\nSize: " + drink.getSize() + "\nPrice: " + drink.getPrice());
-        }
-        if (chips != null) {
-            System.out.println("Chips: " + chips.getType() + "\nPrice: " + chips.getPrice());
+        for (Order order : orders) {
+            if (order instanceof SW && ((SW) order).isHasSandwich()) {
+                System.out.println("Sandwich Details:");
+                // Display sandwich details
+                System.out.println("Bread Type: " + ((SW) order).getType());
+                System.out.println("Toasted: " + ((SW) order).isToasted());
+                System.out.println("Size: " + ((SW) order).getSize());
+                System.out.println("Price: " + ((SW) order).getPrice());
+            } else if (order instanceof Drink && ((Drink) order).isHasDrink()) {
+                System.out.println("Drink Details:");
+                // Display drink details
+                System.out.println("Type: " + ((Drink) order).getType());
+                System.out.println("Size: " + ((Drink) order).getSize());
+                System.out.println("Price: " + ((Drink) order).getPrice());
+            } else if (order instanceof Chips && ((Chips) order).isHasChips()) {
+                System.out.println("Chips Details:");
+                // Display chips details
+                System.out.println("Type: " + ((Chips) order).getType());
+                System.out.println("Price: " + ((Chips) order).getPrice());
+            }
         }
 
-        double totalCost = totalCost();
-        System.out.println("Total Cost: $" + totalCost);
+        //double totalCost = calculateTotalCost(orders);
+        //System.out.println("Total Cost: $" + totalCost);
 
         System.out.println("Confirm or Cancel?");
         System.out.println("1) Confirm");
         System.out.println("2) Cancel");
         System.out.print("Enter your choice: ");
-        int choice = scanner.nextInt();
-
+        String choice = scanner.next();
 
         switch (choice) {
-            case 1:
+            case "1":
                 createReceipt();
                 System.out.println("Order confirmed. Creating receipt...");
                 break;
-            case 2:
+            case "2":
                 System.out.println("Order cancelled. Going back to HOME SCREEN.");
                 homeScreen();
                 break;
@@ -347,29 +372,30 @@ public class Main {
         }
     }
 
-    public static double totalCost() {
-         double sandwichCost = sandwich.getPrice();
-         double drinkCost = drink.getPrice();
-         double chipsCost = chips.getPrice();
+        public static double totalCost () {
+            double sandwichCost = sandwich.getPrice();
+            double drinkCost = drink.getPrice();
+            double chipsCost = chips.getPrice();
 
 //         return sandwichCost + drinkCost;
 //         return sandwichCost + drinkCost + chipsCost;
 //
-        return sandwichCost + drinkCost + chipsCost;
-    }
-    public static void createReceipt() {
-        List<Order> orderList = new ArrayList<>();
-        orderList.add(sandwich);
-        orderList.add(drink);
-        orderList.add(chips);
+            totalCost =  sandwichCost + drinkCost + chipsCost;
+            return totalCost;
+        }
+        public static void createReceipt () {
+//            orderList.add(sandwich);
+//            orderList.add(drink);
+//            orderList.add(chips);
 
 
-        Receipt receipt = new Receipt(orderList, totalCost);
-        receipt.generateReceipt(regTopping());
+            Receipt receipt = new Receipt();
+            receipt.generateReceipt();
 
-        System.out.println("Receipt created.");
-        homeScreen();
-    }
+            System.out.println("Receipt created.");
+            System.out.println("Thanks I guess");
+            System.exit(0);
+        }
 //    public static void displayOrder() {
 //        System.out.println("Sandwich size: " + size);
 //        System.out.println("Bread type: " + breadType);
@@ -377,7 +403,8 @@ public class Main {
 //        System.out.println("Premium toppings: " + premiumToppings);
 //    }
 
-}
+    }
+
 
 
 

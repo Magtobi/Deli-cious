@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SW extends Order{
-    private boolean hasSandwich;
+    public static boolean hasSandwich;
     private boolean toasted;
     private double sizePrice;
     private double meatPrice;
@@ -14,6 +14,8 @@ public class SW extends Order{
     private double extraMeatPrice;
     private boolean extraCheese;
     private double extraCheesePrice;
+    private boolean hasMeat;
+    private boolean hasCheese;
     private List<String> selectedRegularToppings;
     private List<String> selectedPremiumToppings;
 
@@ -23,6 +25,22 @@ public class SW extends Order{
 
     public void setHasSandwich(boolean hasSandwich) {
         this.hasSandwich = hasSandwich;
+    }
+
+    public boolean isHasMeat() {
+        return hasMeat;
+    }
+
+    public void setHasMeat(boolean hasMeat) {
+        this.hasMeat = hasMeat;
+    }
+
+    public boolean isHasCheese() {
+        return hasCheese;
+    }
+
+    public void setHasCheese(boolean hasCheese) {
+        this.hasCheese = hasCheese;
     }
 
     public void addRegularTopping(String topping) {
@@ -84,6 +102,7 @@ public class SW extends Order{
     }
 
     public double getMeatPrice(String size, boolean extraMeat, double extraMeatPrice) {
+        if(isHasMeat()){
         if (size.equals("4")) {
             meatPrice = 1.00;
             extraMeatPrice = 0.50;
@@ -101,11 +120,13 @@ public class SW extends Order{
         }
         if (extraMeat) {
             return meatPrice += extraMeatPrice;
-        }
+        }}
+        else{meatPrice = 0;}
         return meatPrice;
     }
 
     public double getCheesePrice(String size, boolean extraCheese, double extraCheesePrice) {
+        if(isHasCheese()){
         if (size.equals("4")) {
             cheesePrice = 0.75;
             extraCheesePrice = 0.30;
@@ -123,12 +144,12 @@ public class SW extends Order{
         }
         if (extraCheese) {
             return cheesePrice += extraCheesePrice;
-        }
+        }}else { cheesePrice = 0;}
         return cheesePrice;
     }
     @Override
     public double getPrice () {
-        if (hasSandwich) {
+        if (isHasSandwich()) {
             price = getSizePrice(size) + getCheesePrice(size, extraCheese, extraCheesePrice) + getMeatPrice(size, extraMeat, extraMeatPrice);
         } else {
             price = 0.00;
