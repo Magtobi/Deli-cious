@@ -1,4 +1,0 @@
-Drink: coke
-Size: small
-Price: 2.0
-Total Cost: $0.0

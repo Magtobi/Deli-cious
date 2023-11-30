@@ -1,6 +1,7 @@
 package com.pluralsight;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.List;
 
@@ -14,7 +15,9 @@ public class Main {
     private static Drink drink;
     private static Chips chips;
     public static List<String> inputRegToppings;
+    public static List<String> inputPreToppings;
     public static List<Order> orders;
+    public static List<String> userSauceList;
 
     public static void main(String[] args) {
         orders = new ArrayList<>();
@@ -117,7 +120,6 @@ public class Main {
 
         orders.add(sandwich);
         //System.out.println(orders.size());
-
         System.out.println("Would you like to add anything else? (Y/N)");
         String answer = scanner.next().toUpperCase();
         if (answer.equals("Y")) {
@@ -192,6 +194,8 @@ public class Main {
                         // Implement regular toppings selection using Sandwich class methods
                         break;
                     case 2:
+                        preTopping();
+
 //                    SW sw1= new SW("","", true);
 //                    System.out.println("Available regular toppings:\n Meats: Steak, Ham, Salami, Roast Beef, Chicken, Bacon \n Cheeses: American, Provolone, Cheddar, Swiss");
 //
@@ -206,7 +210,7 @@ public class Main {
                         break;
                     case 0:
                         addMoreToppings = false;
-                        orderScreen();
+                        sauces();
                         break;
                     default:
                         System.out.println("Invalid choice. Please try again.");
@@ -224,14 +228,63 @@ public class Main {
 
 
             String input = scan.nextLine(); // to remove all whitespaces
-             inputRegToppings = sw.userRegToppings(input.toLowerCase().replaceAll("\\s+", ""));
+             inputRegToppings = sandwich.userRegToppings(input.toLowerCase().replaceAll("\\s+", ""));
 
 
             return inputRegToppings;
 
             //inputRegToppings.forEach(System.out::println);// way of listing
-
         }
+    public static List<String> preTopping () {
+        Scanner scan = new Scanner(System.in);
+
+
+        System.out.println("Available meat toppings:\n Steak, Ham ,Salami, Roast Beef, Chicken, Bacon,");
+        System.out.println("Available cheese toppings:\n American, Provolone ,Cheddar, Swiss");
+        System.out.println("List the premium toppings you want: (comma-separated)");
+
+
+        String input = scan.nextLine(); // to remove all whitespaces
+        inputPreToppings = sandwich.userPremiumToppings(input.toLowerCase().replaceAll("\\s+", ""));
+
+
+        return inputPreToppings;
+
+        //inputRegToppings.forEach(System.out::println);// way of listing
+    }
+        public static List<String> sauces() {
+        Scanner myScanner = new Scanner(System.in);
+            System.out.println("Would you like any sauces? (Y/N)");
+            String userSauceChoice = myScanner.next().trim().toLowerCase();
+            List<String> sauceList = Arrays.asList(
+                    "mayo", "mustard", "ketchup", "ranch", "thousand island", "vinaigrette"
+            );
+            if (userSauceChoice.equals("Y")) {
+//                ArrayList<String> sauceList = new ArrayList<>();
+//                sauceList.add("Mayo");
+//                sauceList.add("Mustard");
+//                sauceList.add("Ketchup");
+//                sauceList.add("Ranch");
+//                sauceList.add("Thousand Island");
+//                sauceList.add("Vinaigrette");
+
+                System.out.println("Here's our sauce list: " + sauceList);
+                System.out.println("What sauces would you like to add?");
+                System.out.println("Enter sauce choice: (comma-separated) ");
+                String userSauceInput = myScanner.next().trim().toUpperCase();
+
+                List<String> userSauces = Arrays.asList(userSauceInput.split(","));
+
+
+                userSauceList = sauceList.stream()
+                        .filter(topping -> userSauces.stream().anyMatch(topping::contains))
+                        .toList();
+
+
+            }
+            return userSauceList;
+        }
+
 
 
         public static Drink wantsDrink () {
@@ -328,22 +381,24 @@ public class Main {
         for (Order order : orders) {
             if (order instanceof SW && ((SW) order).isHasSandwich()) {
                 System.out.println("Sandwich Details:");
-                // Display sandwich details
-                System.out.println("Bread Type: " + ((SW) order).getType());
+                System.out.println("Bread Type: " + order.getType());
                 System.out.println("Toasted: " + ((SW) order).isToasted());
-                System.out.println("Size: " + ((SW) order).getSize());
-                System.out.println("Price: " + ((SW) order).getPrice());
+                System.out.println("Size: " + order.getSize());
+                System.out.println("Regular Toppings: " + inputRegToppings);
+                System.out.println("Premium Toppings: " + inputPreToppings);
+                System.out.println("Sauce: " + userSauceList);
+                System.out.println("Price: " + order.getPrice());
+
             } else if (order instanceof Drink && ((Drink) order).isHasDrink()) {
                 System.out.println("Drink Details:");
-                // Display drink details
-                System.out.println("Type: " + ((Drink) order).getType());
-                System.out.println("Size: " + ((Drink) order).getSize());
-                System.out.println("Price: " + ((Drink) order).getPrice());
+                System.out.println("Type: " + order.getType());
+                System.out.println("Size: " + order.getSize());
+                System.out.println("Price: " + order.getPrice());
+
             } else if (order instanceof Chips && ((Chips) order).isHasChips()) {
                 System.out.println("Chips Details:");
-                // Display chips details
-                System.out.println("Type: " + ((Chips) order).getType());
-                System.out.println("Price: " + ((Chips) order).getPrice());
+                System.out.println("Type: " + order.getType());
+                System.out.println("Price: " + order.getPrice());
             }
         }
 
@@ -372,16 +427,19 @@ public class Main {
         }
     }
 
-        public static double totalCost () {
-            double sandwichCost = sandwich.getPrice();
-            double drinkCost = drink.getPrice();
-            double chipsCost = chips.getPrice();
-
-//         return sandwichCost + drinkCost;
-//         return sandwichCost + drinkCost + chipsCost;
+        public static void totalCost () {
+            for (Order o : orders) {
+                totalCost += o.getPrice();
+//            double sandwichCost = sandwich.getPrice();
+//            double drinkCost = drink.getPrice();
+//            double chipsCost = chips.getPrice();
 //
-            totalCost =  sandwichCost + drinkCost + chipsCost;
-            return totalCost;
+////         return sandwichCost + drinkCost;
+////         return sandwichCost + drinkCost + chipsCost;
+////
+//            totalCost =  sandwichCost + drinkCost + chipsCost;
+//            return totalCost;
+            }
         }
         public static void createReceipt () {
 //            orderList.add(sandwich);
@@ -396,12 +454,6 @@ public class Main {
             System.out.println("Thanks I guess");
             System.exit(0);
         }
-//    public static void displayOrder() {
-//        System.out.println("Sandwich size: " + size);
-//        System.out.println("Bread type: " + breadType);
-//        System.out.println("Regular toppings: " + regularToppings);
-//        System.out.println("Premium toppings: " + premiumToppings);
-//    }
 
     }
 

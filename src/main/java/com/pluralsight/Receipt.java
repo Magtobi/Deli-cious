@@ -34,21 +34,22 @@ public class Receipt {
             BufferedWriter bufWriter = new BufferedWriter(new FileWriter(file));
 
             for (Order o : orders) {
-                if (o instanceof SW) {
-
                 bufWriter.write(date + " " + time);
                 bufWriter.newLine();
+                if (o instanceof SW) {
+
                 bufWriter.write("Sandwich:");
                 bufWriter.newLine();
                 bufWriter.write("Size: " + o.getSize());
                 bufWriter.newLine();
                 bufWriter.write("Bread Type: " + o.getType());
                 bufWriter.newLine();
-                bufWriter.write("Regular Toppings: ");
-                for (String s : inputRegToppings) {
-                    bufWriter.write(s + ",");
+               // bufWriter.write("Regular Toppings: ");
+               // for (String s : inputRegToppings) {
+               //     bufWriter.write(s + ",");
+                //}
+               // bufWriter.newLine();
                 }
-                bufWriter.newLine(); }
              else if (o instanceof Drink){
                 bufWriter.write("Drink: " + o.getType());
                 bufWriter.newLine();
@@ -68,7 +69,7 @@ public class Receipt {
             }
 
 
-
+            bufWriter.newLine();
             bufWriter.write("Total Cost: $" + totalCost);
 
             bufWriter.close();
