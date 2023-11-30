@@ -34,24 +34,24 @@ public class Receipt {
             File file = new File(folder, fileName);
             BufferedWriter bufWriter = new BufferedWriter(new FileWriter(file));
 
-            for (Order sandwich : order) {
+            for (Order o : order) {
+                if (o instanceof SW) {
+
                 bufWriter.write(date + " " + time);
                 bufWriter.newLine();
                 bufWriter.write("Sandwich:");
                 bufWriter.newLine();
-                bufWriter.write("Size: " + sandwich.getSize());
+                bufWriter.write("Size: " + o.getSize());
                 bufWriter.newLine();
-                bufWriter.write("Bread Type: " + sandwich.getType());
+                bufWriter.write("Bread Type: " + o.getType());
                 bufWriter.newLine();
                 bufWriter.write("Regular Toppings: ");
                 for (String s : whatever) {
                     bufWriter.write(s + ",");
                 }
-                bufWriter.newLine();
-            }
-            for (Order drink : order) {
-                if(drink instanceof Drink){
-                bufWriter.write("Drink: " + drink.getType() + drink.getSize());}
+                bufWriter.newLine(); }
+             else if (o instanceof Drink){
+                bufWriter.write("Drink: " + o.getType() + o.getSize());}
                 //    bufWriter.newLine();
                 //  bufWriter.write("Size: " + drink.getSize());
             }

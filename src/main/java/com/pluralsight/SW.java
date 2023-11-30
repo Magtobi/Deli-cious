@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SW extends Order{
+    private boolean hasSandwich;
     private boolean toasted;
     private double sizePrice;
     private double meatPrice;
@@ -15,6 +16,15 @@ public class SW extends Order{
     private double extraCheesePrice;
     private List<String> selectedRegularToppings;
     private List<String> selectedPremiumToppings;
+
+    public boolean isHasSandwich() {
+        return hasSandwich;
+    }
+
+    public void setHasSandwich(boolean hasSandwich) {
+        this.hasSandwich = hasSandwich;
+    }
+
     public void addRegularTopping(String topping) {
         if (regularToppings.contains(topping)) {
             selectedRegularToppings.add(topping);
@@ -31,6 +41,14 @@ public class SW extends Order{
         super(size, type);
         this.toasted = toasted;
         this.selectedRegularToppings = new ArrayList<>();
+    }
+
+    public boolean isToasted() {
+        return toasted;
+    }
+
+    public void setToasted(boolean toasted) {
+        this.toasted = toasted;
     }
 
     public List<String> getSelectedRegularToppings() {
@@ -110,7 +128,11 @@ public class SW extends Order{
     }
     @Override
     public double getPrice () {
-        price = getSizePrice(size) + getCheesePrice(size, extraCheese, extraCheesePrice) + getMeatPrice(size, extraMeat, extraMeatPrice);
+        if (hasSandwich) {
+            price = getSizePrice(size) + getCheesePrice(size, extraCheese, extraCheesePrice) + getMeatPrice(size, extraMeat, extraMeatPrice);
+        } else {
+            price = 0.00;
+        }
         return price;
     }
     public static final List<String> regularToppings = Arrays.asList(
