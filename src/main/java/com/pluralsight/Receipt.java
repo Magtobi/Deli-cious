@@ -15,8 +15,8 @@ import static com.pluralsight.Main.*;
 
 public class Receipt {
 
-
     public static DateTimeFormatter fmt = DateTimeFormatter.ofPattern("HH:mm:ss");
+
     public Receipt() {
 
     }
@@ -32,55 +32,37 @@ public class Receipt {
 
             File file = new File(folder, fileName);
             BufferedWriter bufWriter = new BufferedWriter(new FileWriter(file));
-                bufWriter.write(date + " " + time);
+            bufWriter.write(date + " " + time);
 
             for (Order o : orders) {
                 bufWriter.newLine();
                 if (o instanceof SW) {
-
-                bufWriter.write("Sandwich:");
-                bufWriter.newLine();
-                bufWriter.write("Size: " + o.getSize());
-                bufWriter.newLine();
-                bufWriter.write("Bread Type: " + o.getType());
-                bufWriter.newLine();
-                bufWriter.write("Regular Toppings: ");
-                for (String s : inputRegToppings) {
-                    bufWriter.write(s + ", ");
-                }
-                bufWriter.newLine();
-                bufWriter.write("Premium Toppings: ");
-                    for (String s : inputPreToppings) {
-                        bufWriter.write(s + ", ");
-                    }
+                    bufWriter.write("Sandwich:");
                     bufWriter.newLine();
-                    bufWriter.write("Sauce: ");
-                    for (String s : userSauceList) {
-                        bufWriter.write(s + ", ");
-                    }
+                    bufWriter.write("Size: " + o.getSize());
+                    bufWriter.newLine();
+                    bufWriter.write("Bread Type: " + o.getType());
+                    bufWriter.newLine();
+                    writeList(bufWriter, "Regular Toppings: ", inputRegToppings);
+                    writeList(bufWriter, "Premium Toppings: ", inputPreToppings);
+                    writeList(bufWriter, "Sauce: ", userSauceList);
+                    bufWriter.newLine();
+                    bufWriter.write("Price: $" + o.getPrice());
+                    bufWriter.newLine();
+                } else if (o instanceof Drink) {
+                    bufWriter.write("Drink: " + o.getType());
+                    bufWriter.newLine();
+                    bufWriter.write("Size: " + o.getSize());
+                    bufWriter.newLine();
+                    bufWriter.write("Price: $" + o.getPrice());
+                    bufWriter.newLine();
+                } else if (o instanceof Chips) {
+                    bufWriter.write("Chips Flavor: " + o.getType());
                     bufWriter.newLine();
                     bufWriter.write("Price: $" + o.getPrice());
                     bufWriter.newLine();
                 }
-
-             else if (o instanceof Drink){
-                bufWriter.write("Drink: " + o.getType());
-                bufWriter.newLine();
-                bufWriter.write("Size: " + o.getSize());
-                bufWriter.newLine();
-                bufWriter.write("Price: $" + o.getPrice());
-                bufWriter.newLine();
-             }
-             else if(o instanceof Chips){
-                 bufWriter.write("Chips Flavor: " + o.getType());
-                 bufWriter.newLine();
-                 bufWriter.write("Price: $" + o.getPrice());
-                 bufWriter.newLine();
-                }
-                //    bufWriter.newLine();
-                //  bufWriter.write("Size: " + drink.getSize());
             }
-
 
             bufWriter.newLine();
             for (Order o : orders) {
@@ -94,9 +76,15 @@ public class Receipt {
         }
 
     }
-//    public static void totalCost () {
-//        for (Order o : orders) {
-//            totalCost += o.getPrice();
-//        }
-//    }
+
+    private void writeList(BufferedWriter bufWriter, String header, List<String> items) throws IOException {
+        bufWriter.write(header);
+        if (!items.isEmpty()) {
+            for (int i = 0; i < items.size() - 1; i++) {
+                bufWriter.write(items.get(i) + ", ");
+            }
+            bufWriter.write(items.get(items.size() - 1));
+        }
+        bufWriter.newLine();
+    }
 }

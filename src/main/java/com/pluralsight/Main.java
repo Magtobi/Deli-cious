@@ -389,18 +389,18 @@ public class Main {
                 System.out.println("Regular Toppings: " + inputRegToppings);
                 System.out.println("Premium Toppings: " + inputPreToppings);
                 System.out.println("Sauce: " + userSauceList);
-                System.out.println("Price: " + order.getPrice());
+                System.out.println("Price: $" + order.getPrice());
 
             } else if (order instanceof Drink && ((Drink) order).isHasDrink()) {
                 System.out.println("Drink Details:");
                 System.out.println("Type: " + order.getType());
                 System.out.println("Size: " + order.getSize());
-                System.out.println("Price: " + order.getPrice());
+                System.out.println("Price: $" + order.getPrice());
 
             } else if (order instanceof Chips && ((Chips) order).isHasChips()) {
                 System.out.println("Chips Details:");
                 System.out.println("Type: " + order.getType());
-                System.out.println("Price: " + order.getPrice());
+                System.out.println("Price: $" + order.getPrice());
             }
         }
 
@@ -453,7 +453,7 @@ public class Main {
             receipt.generateReceipt();
 
             System.out.println("Receipt created.");
-            System.out.println("Thanks I guess");
+            System.out.println("Thanks, I guess");
             System.exit(0);
         }
 

@@ -1,0 +1,10 @@
+2023-11-30 23:52:38
+Drink: coke
+Size: small
+Price: $2.0
+
+Drink: coke
+Size: large
+Price: $3.0
+
+Total Cost: $5.0

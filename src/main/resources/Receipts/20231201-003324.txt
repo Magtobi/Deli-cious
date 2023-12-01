@@ -1,0 +1,15 @@
+2023-12-01 00:33:24
+Sandwich:
+Size: 12"
+Bread Type: wrap
+Regular Toppings: lettuce, tomatoes, pickles
+Premium Toppings: steak, bacon, provolone, swiss
+Sauce: mayo
+
+Price: $8.5
+
+Drink: sprite
+Size: small
+Price: $2.0
+
+Total Cost: $10.5
