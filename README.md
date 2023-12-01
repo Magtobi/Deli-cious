@@ -3,7 +3,7 @@ Terminal application that allows a user to order from a restaurant.
 Program starts at a home screen that allows the user to make an order or close the app
 ![image](https://github.com/Magtobi/Deli-cious/assets/146876229/0c5c1f74-b748-45ba-b9bb-d03d46c6b6c7)
 
-If user choose to make an order they will be taken to an order screen.
+If the user chooses to make an order they will be taken to an order screen.
 ![image](https://github.com/Magtobi/Deli-cious/assets/146876229/db173b95-cbf0-4ccb-ac13-23ed8cc5ba8d)
 
 If the user chooses a sandwich they will be asked multiple questions including bread type, size, toppings, and sauces
