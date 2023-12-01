@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.pluralsight.Main.swSize;
+
 public class SW extends Order{
     public static boolean hasSandwich;
     private boolean toasted;
@@ -84,15 +86,21 @@ public class SW extends Order{
     public void setSelectedPremiumToppings(List<String> selectedPremiumToppings) {
         this.selectedPremiumToppings = selectedPremiumToppings;
     }
+    public String getSize(){
+        return size;
+    }
+    public void setSize(String size){
+        this.size = size;
+    }
 
-    public double getSizePrice(String size) {
-        if (size.equals("4")) {
+    public double getSizePrice() {
+        if (getSize().equals("4\"")) {
             sizePrice = 5.50;
 
-        } else if (size.equals("8")) {
+        } else if (getSize().equals("8\"")) {
             sizePrice = 7.00;
 
-        } else if (size.equals("12")) {
+        } else if (getSize().equals("12\"")) {
             sizePrice = 8.50;
 
         } else {
@@ -101,17 +109,17 @@ public class SW extends Order{
         return sizePrice;
     }
 
-    public double getMeatPrice(String size, boolean extraMeat, double extraMeatPrice) {
+    public double getMeatPrice() {
         if(isHasMeat()){
-        if (size.equals("4")) {
+        if (getSize().equals("4\"")) {
             meatPrice = 1.00;
             extraMeatPrice = 0.50;
 
-        } else if (size.equals("8")) {
+        } else if (getSize().equals("8\"")) {
             meatPrice = 2.00;
             extraMeatPrice = 1.00;
 
-        } else if (size.equals("12")) {
+        } else if (getSize().equals("12\"")) {
             meatPrice = 3.00;
             extraMeatPrice = 1.50;
 
@@ -125,17 +133,17 @@ public class SW extends Order{
         return meatPrice;
     }
 
-    public double getCheesePrice(String size, boolean extraCheese, double extraCheesePrice) {
+    public double getCheesePrice() {
         if(isHasCheese()){
-        if (size.equals("4")) {
+        if (getSize().equals("4\"")) {
             cheesePrice = 0.75;
             extraCheesePrice = 0.30;
 
-        } else if (size.equals("8")) {
+        } else if (getSize().equals("8\"")) {
             cheesePrice = 1.50;
             extraCheesePrice = 0.60;
 
-        } else if (size.equals("12")) {
+        } else if (getSize().equals("12\"")) {
             cheesePrice = 2.25;
             extraCheesePrice = 0.90;
 
@@ -150,7 +158,7 @@ public class SW extends Order{
     @Override
     public double getPrice () {
         if (isHasSandwich()) {
-            price = getSizePrice(size) + getCheesePrice(size, extraCheese, extraCheesePrice) + getMeatPrice(size, extraMeat, extraMeatPrice);
+            price = getSizePrice() + getCheesePrice() + getMeatPrice();
         } else {
             price = 0.00;
         }

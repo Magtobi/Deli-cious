@@ -1,0 +1,10 @@
+2023-11-30 18:49:07
+Drink: coke
+Size: small
+Price: $2.0
+
+Drink: sprite
+Size: large
+Price: $3.0
+
+Total Cost: $5.0

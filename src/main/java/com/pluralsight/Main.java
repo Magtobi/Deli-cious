@@ -18,6 +18,7 @@ public class Main {
     public static List<String> inputPreToppings;
     public static List<Order> orders;
     public static List<String> userSauceList;
+    public static String swSize;
 
     public static void main(String[] args) {
         orders = new ArrayList<>();
@@ -111,12 +112,13 @@ public class Main {
         }
 
         String breadType = breadType(breadChoice);
-        String size = sandwichSize(sizeChoice);
+        swSize = sandwichSize(sizeChoice);
 
-        sandwich = new SW(size, breadType, isToasted);
+        sandwich = new SW(swSize, breadType, isToasted);
         customizeSandwich(sandwich);
 
         sandwich.setHasSandwich(true);
+        sandwich.setSize(swSize);
 
         orders.add(sandwich);
         //System.out.println(orders.size());
@@ -255,7 +257,7 @@ public class Main {
         public static List<String> sauces() {
         Scanner myScanner = new Scanner(System.in);
             System.out.println("Would you like any sauces? (Y/N)");
-            String userSauceChoice = myScanner.next().trim().toLowerCase();
+            String userSauceChoice = myScanner.next().trim().toUpperCase();
             List<String> sauceList = Arrays.asList(
                     "mayo", "mustard", "ketchup", "ranch", "thousand island", "vinaigrette"
             );
@@ -271,13 +273,13 @@ public class Main {
                 System.out.println("Here's our sauce list: " + sauceList);
                 System.out.println("What sauces would you like to add?");
                 System.out.println("Enter sauce choice: (comma-separated) ");
-                String userSauceInput = myScanner.next().trim().toUpperCase();
+                String userSauceInput = myScanner.next().trim().toLowerCase().replaceAll("\\s+", "");
 
                 List<String> userSauces = Arrays.asList(userSauceInput.split(","));
 
 
                 userSauceList = sauceList.stream()
-                        .filter(topping -> userSauces.stream().anyMatch(topping::contains))
+                        .filter(sauces -> userSauces.stream().anyMatch(sauces::contains))
                         .toList();
 
 
@@ -427,20 +429,20 @@ public class Main {
         }
     }
 
-        public static void totalCost () {
-            for (Order o : orders) {
-                totalCost += o.getPrice();
-//            double sandwichCost = sandwich.getPrice();
-//            double drinkCost = drink.getPrice();
-//            double chipsCost = chips.getPrice();
-//
-////         return sandwichCost + drinkCost;
-////         return sandwichCost + drinkCost + chipsCost;
+//        public static void totalCost () {
+//            for (Order o : orders) {
+//                totalCost += o.getPrice();
+////            double sandwichCost = sandwich.getPrice();
+////            double drinkCost = drink.getPrice();
+////            double chipsCost = chips.getPrice();
 ////
-//            totalCost =  sandwichCost + drinkCost + chipsCost;
-//            return totalCost;
-            }
-        }
+//////         return sandwichCost + drinkCost;
+//////         return sandwichCost + drinkCost + chipsCost;
+//////
+////            totalCost =  sandwichCost + drinkCost + chipsCost;
+////            return totalCost;
+//            }
+//        }
         public static void createReceipt () {
 //            orderList.add(sandwich);
 //            orderList.add(drink);

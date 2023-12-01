@@ -1,0 +1,14 @@
+2023-11-30 19:26:53
+Sandwich:
+Size: 4"
+Bread Type: white
+Regular Toppings: lettuce, peppers, 
+Premium Toppings: steak, american, 
+Sauce: mayo, mustard, 
+Price: $5.5
+
+Drink: coke
+Size: large
+Price: $3.0
+
+Total Cost: $8.5
